@@ -1,0 +1,15 @@
+[TYPECHECK]
+ignored-classes=PublisherClient
+
+[FORMAT]
+
+# Regexp for a line that is allowed to be longer than the limit.
+ignore-long-lines=^\s*(# )?<?https?://\S+>?$
+
+# Number of spaces of indent required inside a hanging or continued line.
+# indent-string='  '
+
+max-line-length=160
+
+[DESIGN]
+max-locals=40

@@ -1,0 +1,22 @@
+static-analysis:
+  image: python:3.6
+  stage: test
+  cache:
+    paths:
+      - .pip
+  script: 
+    - mkdir -p public
+    - pip3 install -U pip
+    - pip3 install --cache-dir=.pip .
+    - pip3 install --cache-dir=.pip pylint anybadge 
+    - wget https://github.com/SaschaJust/citasks/archive/master.tar.gz -O citasks.tar.gz
+    - tar xzvf citasks.tar.gz 
+    # Adjust <THE_PACKAGE> IN THE NEXT LINE to the correct path of the python package
+    - bash citasks-master/pylint/run.sh public/pylint.log public/pylint.svg <THE_PACKAGE>
+  artifacts:
+    paths:
+      - public/pylint.svg
+      - public/pylint.log
+  only:
+    refs: 
+      - master
