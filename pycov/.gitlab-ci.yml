@@ -1,0 +1,40 @@
+# You need to enable coverage parsing in Gitlab.
+# Go to [Settings]->[CI/CD]->[General Pipelines]->[Test Coverage Parsing]
+# and use a regex that matches your configuration. In our case, that's:
+# ^TOTAL\s+\d+\s+\d+\s+\d+\s+\d+\s+(\d+\%)$
+# 
+# Change <THE_PACKAGE> to the respective python package
+<THE_PACKAGE>:
+  image: python:3.6
+  stage: test
+  cache:
+    paths:
+      - .pip
+  script: 
+    - mkdir public
+    - pip3 install -U pip
+    - pip3 install --cache-dir=.pip .[test]
+    - python3 setup.py nosetests
+    - mv cover public/coverage
+  artifacts:
+    paths:
+    - public/coverage
+  only:
+    changes:
+      # CHANGE THIS TOO!
+      - <THE_PACKAGE>/**
+      - setup.py
+      - setup.cfg
+      - .gitlab-ci.yml
+
+pages:
+  stage: deploy
+  script: 
+    - echo "Deploying artifacts..."
+    - find public -type f
+  artifacts:
+    name: pages
+    paths:
+    - public
+  only:
+  - master
