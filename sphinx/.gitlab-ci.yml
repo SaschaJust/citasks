@@ -1,0 +1,28 @@
+docs:
+  image: python:3.6
+  stage: test
+  cache:
+    paths:
+      - .pip
+  script: 
+    - mkdir -p public
+    - pip3 install -U pip
+    - pip3 install --cache-dir=.pip .[docs]
+    - pip3 install --cache-dir=.pip anybadge
+    - wget https://github.com/SaschaJust/citasks/archive/master.tar.gz -O citasks.tar.gz
+    - tar xzvf citasks.tar.gz 
+    # THIS DEPENDENDS ON YOUR ACTUAL SETUP. 
+    # Change accordingly
+    - cd docs
+    - bash citasks-master/sphinx/run.sh ../public/documentation/ ../public/sphinx.svg
+  artifacts:
+    paths:
+    - public/documentation
+    - public/sphinx.svg
+  only:
+    refs:
+      - master
+    changes:
+      - hgminer/**
+      - docs/**
+      - .gitlab-ci.yml
