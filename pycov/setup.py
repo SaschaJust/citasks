@@ -4,6 +4,7 @@ from setuptools import setup
 
 TEST_REQUIREMENTS = [
     'nose>=1.3',
+    'coverage'
 ]
 
 setup(tests_require=TEST_REQUIREMENTS,
