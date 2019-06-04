@@ -13,8 +13,7 @@ docs:
     - tar xzvf citasks.tar.gz 
     # THIS DEPENDENDS ON YOUR ACTUAL SETUP. 
     # Change accordingly
-    - cd docs
-    - bash citasks-master/sphinx/run.sh ../public/documentation/ ../public/sphinx.svg
+    - bash citasks-master/sphinx/run.sh <DOCUMENTATION_BASEDIR> ../public/documentation/ ../public/sphinx.svg
   artifacts:
     paths:
     - public/documentation
